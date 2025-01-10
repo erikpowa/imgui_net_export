@@ -1,9 +1,12 @@
 #include "main.h"
 
+#include <d3d9.h>
 #include <unordered_map>
 
 #include "utils.h"
 
+
+bool disableRecursion = true; // .NET bug jit recursion detection
 std::unordered_set<wstring> structs;
 std::unordered_set<DWORD> usedSymbolIds;
 
@@ -26,21 +29,22 @@ bool GetEnumTypeMemberCallback(IDiaSession* pDiaSession, IDiaSymbol* pDiaSymbol)
         VariantInit(&memberValue);
 
         if (SUCCEEDED(pDiaSymbol->get_value(&memberValue))) {
-
             switch (memberValue.vt) {
-            case VT_I1:
-            case VT_I2:
-            case VT_UI2:
-            case VT_I4:
-            case VT_UI4:
-
-                // wstring_tohex(memberValue.intVal, 8)
-
-                wcout << L"\t" << memberName << L" = " << wstring_tobitshiftexpression(memberValue.intVal) << L", // " << wstring_tohex(memberValue.intVal, 8) << endl;
-                // wcout << L"\t" << memberName << L" = " << memberValue.iVal << L", // 0x" << setw(8) << setfill('0') << hex << uppercase << memberValue.iVal << endl;
+                case VT_I2:
+                    wcout << L"\t" << memberName << L" = " << wstring_tobitshiftexpression(memberValue.iVal) << L", // " << wstring_tohex(memberValue.iVal, 8) << endl;
                 break;
-            default:
-                wcout << L"\t" << memberName << L" = 0, // (vt = " << memberValue.vt << L")" << endl;
+                case VT_UI2:
+                    wcout << L"\t" << memberName << L" = " << wstring_tobitshiftexpression(memberValue.uiVal) << L", // " << wstring_tohex(memberValue.uiVal, 8) << endl;
+                break;
+                case VT_I1:
+                    wcout << L"\t" << memberName << L" = " << wstring_tobitshiftexpression(static_cast<int>(memberValue.iVal)) << L", // " << wstring_tohex(memberValue.iVal, 8) << endl;
+                break;
+                case VT_UI4:
+                    wcout << L"\t" << memberName << L" = " << wstring_tobitshiftexpression((int)memberValue.intVal) << L", // " << wstring_tohex(memberValue.intVal, 8) << endl;
+                break;
+                case VT_I4:
+                    default:
+                        wcout << L"\t" << memberName << L" = 0, // (vt = " << memberValue.vt << L")" << endl;
                 break;
             }
         }
@@ -92,6 +96,9 @@ bool GetEnumTypeCallback(IDiaSession* pDiaSession, IDiaSymbol* pDiaSymbol)
 
     typeName = wstring_replace(typeName, L"_", L"");
 
+    if(wstring_contains(typeName, L"Flags"))
+        wcout << L"[Flags]" << endl;
+
     wcout << L"public enum " << typeName << L" {" << endl;
     EnumChildren(pDiaSession, pDiaSymbol, SymTagEnum::SymTagData, nullptr, nsfCaseInsensitive | nsfUndecoratedName, GetEnumTypeMemberCallback);
     wcout << L"}" << endl;
@@ -134,8 +141,19 @@ bool GetStructTypeMemberCallback(IDiaSession* pDiaSession, IDiaSymbol* pDiaSymbo
 
     wstring fieldTypeName = GetTypeName(pDiaSession, fieldType);
 
+bool comment = false;
+
+    if(disableRecursion) {
+        if(wstring_contains(fieldTypeName, L"ImGuiWindowTempData")) {
+            comment  = true;
+        }
+    }
+
     // [FieldOffset(0x0004)] public readonly int Hello;
-    wcout << L"\t[FieldOffset(" << wstring_tohex(offset, 4) << L")] " << accessString << " " << fieldTypeName << " " << fieldName << L";" << endl;
+    if(comment)
+        wcout << L"\t// [FieldOffset(" << wstring_tohex(offset, 4) << L")] " << accessString << " " << fieldTypeName << " " << fieldName << L";" << endl;
+    else
+        wcout << L"\t[FieldOffset(" << wstring_tohex(offset, 4) << L")] " << accessString << " " << fieldTypeName << " " << fieldName << L";" << endl;
 
     SysFreeString(fieldName);
     return true;
@@ -372,6 +390,16 @@ bool GetExportsCallback(IDiaSession* pDiaSession, IDiaSymbol* pDiaSymbol)
     typeDefArgs.append(L"] <");
     IDiaEnumSymbols* pEnumSymTagData = nullptr;
 
+    DWORD symTag = 0;
+    if (SUCCEEDED(pFuncReturnTypeDiaSymbol->get_symTag(&symTag)) && symTag == SymTagUDT) {
+        // x86 CDEL ??? return type UDT be pointer and passed as first argument
+        // struct ImVec2 __cdecl ImGui::CalcTextSize(char const *,char const *,bool,float)
+        // ImVec2 *__cdecl ImGui::CalcTextSize(ImVec2 *result, const char *text, const char *text_end, bool hide_text_after_double_hash, float wrap_width)
+        returnTypeName = returnTypeName + L"*";
+        typeDefArgs.append(returnTypeName);
+        typeDefArgs.append(L", ");
+    }
+
     if (SUCCEEDED(pFuncDiaSymbol->findChildren(SymTagData, nullptr, nsNone, &pEnumSymTagData)) && pEnumSymTagData != nullptr) {
         IDiaSymbol* pParamSymbol = nullptr;
         ULONG fetched = 0;
@@ -384,7 +412,9 @@ bool GetExportsCallback(IDiaSession* pDiaSession, IDiaSymbol* pDiaSymbol)
                 case DataIsParam: // param arg
                     if (SUCCEEDED(pParamSymbol->get_type(&pParamTypeSymbol)) && pParamTypeSymbol != nullptr) {
                         //PrintProperties(pParamTypeSymbol);
-                        typeDefArgs.append(GetTypeName(pDiaSession, pParamTypeSymbol));
+                        wstring typeName = GetTypeName(pDiaSession, pParamTypeSymbol);
+
+                        typeDefArgs.append(typeName);
                         typeDefArgs.append(L", ");
                     }
                     break;
@@ -413,9 +443,9 @@ bool GetExportsCallback(IDiaSession* pDiaSession, IDiaSymbol* pDiaSymbol)
     typeDef.append(typeDefName);
     typeDef.append(L" = (");
     typeDef.append(typeDefArgs);
-    typeDef.append(L")GetProc(");
+    typeDef.append(L")_imgui["); // TODO cmd args
     typeDef.append(to_wstring(ordinal));
-    typeDef.append(L");");
+    typeDef.append(L"];");
 
     wcout << "[Description(\"" << undecoratedName << "\")]" << endl;
     wcout << typeDef << endl;
@@ -423,8 +453,42 @@ bool GetExportsCallback(IDiaSession* pDiaSession, IDiaSymbol* pDiaSymbol)
     return true;
 }
 
+std::wstring GetDotNetCoreVersion() {
+    HKEY hKey;
+    const wchar_t* subkey = L"SOFTWARE\\dotnet\\Setup\\InstalledVersions\\x64\\sharedhost";
+    if (RegOpenKeyExW(HKEY_LOCAL_MACHINE, subkey, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+        wchar_t version[256];
+        DWORD size = sizeof(version);
+        if (RegQueryValueExW(hKey, L"Version", nullptr, nullptr, reinterpret_cast<byte *>(&version), &size) == ERROR_SUCCESS) {
+            RegCloseKey(hKey);
+            return std::wstring{version};
+        }
+        RegCloseKey(hKey);
+    }
+    return L"8.0.2";
+}
+
+
 int main(int)
 {
+/*#if defined(_WIN64) || defined(__x86_64__) || defined(__ppc64__)
+    std::cout << "Environment: x64" << std::endl;
+#else
+    std::cout << "Environment: x86" << std::endl;
+#endif
+
+    wcout << D3D_SDK_VERSION << endl;
+
+    std::cout << std::hex << std::setfill('0');  // Set hex format and fill with '0'
+
+    std::cout << "Offset of a: 0x" << std::setw(4) << offsetof(D3DPRESENT_PARAMETERS, BackBufferWidth) << std::endl;
+    std::cout << "Offset of a: 0x" << std::setw(4) << offsetof(D3DPRESENT_PARAMETERS, BackBufferHeight) << std::endl;
+    std::cout << "Offset of a: 0x" << std::setw(4) << offsetof(D3DPRESENT_PARAMETERS, BackBufferFormat) << std::endl;
+    std::cout << "Offset of a: 0x" << std::setw(4) << offsetof(D3DPRESENT_PARAMETERS, Flags) << std::endl;
+    std::cout << "Offset of a: 0x" << std::setw(4) << offsetof(D3DPRESENT_PARAMETERS, FullScreen_RefreshRateInHz) << std::endl;
+    std::cout << "Offset of a: 0x" << std::setw(4) << offsetof(D3DPRESENT_PARAMETERS, PresentationInterval) << std::endl;
+    return 0;*/
+
     if (FAILED(CoInitialize(nullptr))) {
         wcout << L"Failed to initialize COM library." << endl;
         return -1;
@@ -474,9 +538,10 @@ int main(int)
     }
 
     //TODO from args
-    wstring nameSpace = L"x";
-    BOOL addGetProc = FALSE;
-    BOOL appendFuncTypeDefDescription = FALSE;
+    wstring nameSpace = L"GameExtensions";
+    bool moduleDef = true;
+    bool appendFuncTypeDefDescription = false;
+
 
     wcout << L"using System.Runtime.InteropServices;" << endl;
     wcout << L"using System.ComponentModel;" << endl;
@@ -491,9 +556,14 @@ int main(int)
     wcout << L"namespace " << nameSpace << L";" << endl;
 
     wcout << L"public unsafe partial struct ImGui {" << endl;
-    if(addGetProc)
-        wcout << L"[MethodImpl(MethodImplOptions.AggressiveInlining)] internal static IntPtr GetProc(uint ordinal) => throw new NotImplementedException();" << endl;
+    if(moduleDef) {
+        wcout << L"private static readonly Module _imgui = new(\"imgui.dll\");" << endl;
+        // wcout << L"internal static IntPtr GetProc(uint ordinal) => _imgui[ordinal];" << endl;
+        // wcout << L"[MethodImpl(MethodImplOptions.AggressiveInlining)] internal static IntPtr GetProc(uint ordinal) => throw new NotImplementedException();" << endl;
+    }
+
     EnumExports(pDiaSession, GetExportsCallback);
+
     wcout << L"}" << endl;
 
     wcout << L"public unsafe struct ImVector<T> where T : unmanaged { public int Size; public int Capacity; public T* Data; }" << endl;

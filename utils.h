@@ -19,9 +19,9 @@ wstring wstring_from(unsigned long value);
 bool wstring_startswith(const wstring& str, const wstring& prefix);
 
 template<typename T>
-wstring wstring_tohex(const T &value, DWORD size) {
+wstring wstring_tohex(const T &value, const DWORD size) {
     wstringstream wss;
-    wss << L"0x" << setw(size) << setfill(L'0') << hex << uppercase << value;
+    wss  << uppercase << L"0x"  << setfill(L'0') << setw(size) << hex << value;
     return wss.str();
 }
 
