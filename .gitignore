@@ -33,4 +33,11 @@
 
 # Project
 build/
+.vs/
 .idea/
+.temp
+cmake-build-debug/
+cmake-build-debug-visual-studio/
+bin/
+obj/
+fonts/
