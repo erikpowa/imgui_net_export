@@ -41,3 +41,4 @@ cmake-build-debug-visual-studio/
 bin/
 obj/
 fonts/
+/Folder.DotSettings.user
