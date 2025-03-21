@@ -42,3 +42,4 @@ bin/
 obj/
 fonts/
 /Folder.DotSettings.user
+/sample/imgui.pdb

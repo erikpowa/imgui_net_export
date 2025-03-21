@@ -11,11 +11,14 @@
     </PropertyGroup>
     <ItemGroup>
       <Compile Remove="build\**" />
+      <Compile Remove="sample\**" />
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Remove="build\**" />
+        <EmbeddedResource Remove="sample\**" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="build\**" />
+        <None Remove="sample\**" />
     </ItemGroup>
 </Project>
