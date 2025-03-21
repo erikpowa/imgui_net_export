@@ -92,9 +92,9 @@ public unsafe partial class LibraryImportDescriptor : CSharpDescriptor
                     argType->Release(argType);
                     return true;
                 });
-                
-                functionName = Sanitize(functionName);
+
                 var functionNameNormalized = GetUniqueFunctionName(functionName);
+                functionName = Sanitize(functionName);
 
                 _libraryImports.AppendLine($"[LibraryImport(\"{_libraryName}\", EntryPoint = \"{functionNameNormalized}\"), UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]");
 

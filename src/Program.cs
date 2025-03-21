@@ -57,11 +57,6 @@ public unsafe partial class Program
    
     static void Main(string[] args)
     {
-        #if DEBUG
-        Generate("C:\\Users\\glitch\\Desktop\\Projects\\imgui_net_export\\.temp\\imgui.pdb");
-        return;
-        #endif
-        
         List<string> filePaths = new List<string>();
 
         if (args.Length > 0)

@@ -184,10 +184,10 @@ extern "C" {
 	__declspec(dllexport) bool ImGui_CollapsingHeader(const char* label, int flags) { return ImGui::CollapsingHeader(label, flags); }
 	__declspec(dllexport) bool ImGui_CollapsingHeader0(const char* label, bool* p_visible, int flags) { return ImGui::CollapsingHeader(label, p_visible, flags); }
 	__declspec(dllexport) bool ImGui_ColorButton(const char* desc_id, const ImVec4& col, int flags, const ImVec2& size_arg) { return ImGui::ColorButton(desc_id, col, flags, size_arg); }
-	__declspec(dllexport) unsigned int ImGui_ColorConvertFloat4ToU32(const ImVec4& in) { return ImGui::ColorConvertFloat4ToU32(in); }
+	__declspec(dllexport) unsigned int ImGui_ColorConvertFloat4ToU32(const ImVec4& _in) { return ImGui::ColorConvertFloat4ToU32(_in); }
 	__declspec(dllexport) void ImGui_ColorConvertHSVtoRGB(float h, float s, float v, float& out_r, float& out_g, float& out_b) { ImGui::ColorConvertHSVtoRGB(h, s, v, out_r, out_g, out_b); }
 	__declspec(dllexport) void ImGui_ColorConvertRGBtoHSV(float r, float g, float b, float& out_h, float& out_s, float& out_v) { ImGui::ColorConvertRGBtoHSV(r, g, b, out_h, out_s, out_v); }
-	__declspec(dllexport) ImVec4 ImGui_ColorConvertU32ToFloat4(unsigned int in) { return ImGui::ColorConvertU32ToFloat4(in); }
+	__declspec(dllexport) ImVec4 ImGui_ColorConvertU32ToFloat4(unsigned int _in) { return ImGui::ColorConvertU32ToFloat4(_in); }
 	__declspec(dllexport) bool ImGui_ColorEdit3(const char* label, float* col, int flags) { return ImGui::ColorEdit3(label, col, flags); }
 	__declspec(dllexport) bool ImGui_ColorEdit4(const char* label, float* col, int flags) { return ImGui::ColorEdit4(label, col, flags); }
 	__declspec(dllexport) void ImGui_ColorEditOptionsPopup(const float* col, int flags) { ImGui::ColorEditOptionsPopup(col, flags); }
@@ -458,81 +458,81 @@ extern "C" {
 	__declspec(dllexport) float ImGui_GetWindowWidth() { return ImGui::GetWindowWidth(); }
 	__declspec(dllexport) void ImFont_GrowIndex(ImFont* _this, int new_size) { _this->GrowIndex(new_size); }
 	__declspec(dllexport) bool ImGuiInputTextState_HasSelection(const ImGuiInputTextState* _this) { return _this->HasSelection(); }
-	__declspec(dllexport) unsigned int ImAlphaBlendColorsExt(unsigned int col_a, unsigned int col_b) { return ImAlphaBlendColors(col_a, col_b); }
-	__declspec(dllexport) ImVec2 ImBezierCubicCalcExt(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, float t) { return ImBezierCubicCalc(p1, p2, p3, p4, t); }
-	__declspec(dllexport) ImVec2 ImBezierCubicClosestPointExt(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, const ImVec2& p, int num_segments) { return ImBezierCubicClosestPoint(p1, p2, p3, p4, p, num_segments); }
-	__declspec(dllexport) ImVec2 ImBezierCubicClosestPointCasteljauExt(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, const ImVec2& p, float tess_tol) { return ImBezierCubicClosestPointCasteljau(p1, p2, p3, p4, p, tess_tol); }
-	__declspec(dllexport) ImVec2 ImBezierQuadraticCalcExt(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, float t) { return ImBezierQuadraticCalc(p1, p2, p3, t); }
-	__declspec(dllexport) bool ImFileCloseExt(_iobuf* f) { return ImFileClose(f); }
-	__declspec(dllexport) unsigned long long ImFileGetSizeExt(_iobuf* f) { return ImFileGetSize(f); }
-	__declspec(dllexport) void* ImFileLoadToMemoryExt(const char* filename, const char* mode, unsigned int* out_file_size, int padding_bytes) { return ImFileLoadToMemory(filename, mode, out_file_size, padding_bytes); }
-	__declspec(dllexport) _iobuf* ImFileOpenExt(const char* filename, const char* mode) { return ImFileOpen(filename, mode); }
-	__declspec(dllexport) unsigned long long ImFileReadExt(void* data, unsigned long long sz, unsigned long long count, _iobuf* f) { return ImFileRead(data, sz, count, f); }
-	__declspec(dllexport) unsigned long long ImFileWriteExt(const void* data, unsigned long long sz, unsigned long long count, _iobuf* f) { return ImFileWrite(data, sz, count, f); }
-	__declspec(dllexport) void ImFontAtlasBuildFinishExt(ImFontAtlas* atlas) { ImFontAtlasBuildFinish(atlas); }
-	__declspec(dllexport) void ImFontAtlasBuildGetOversampleFactorsExt(const ImFontConfig* src, int* out_oversample_h, int* out_oversample_v) { ImFontAtlasBuildGetOversampleFactors(src, out_oversample_h, out_oversample_v); }
-	__declspec(dllexport) void ImFontAtlasBuildInitExt(ImFontAtlas* atlas) { ImFontAtlasBuildInit(atlas); }
-	__declspec(dllexport) void ImFontAtlasBuildMultiplyCalcLookupTableExt(byte* out_table, float in_brighten_factor) { ImFontAtlasBuildMultiplyCalcLookupTable(out_table, in_brighten_factor); }
-	__declspec(dllexport) void ImFontAtlasBuildMultiplyRectAlpha8Ext(const byte* table, byte* pixels, int x, int y, int w, int h, int stride) { ImFontAtlasBuildMultiplyRectAlpha8(table, pixels, x, y, w, h, stride); }
-	__declspec(dllexport) void ImFontAtlasBuildPackCustomRectsExt(ImFontAtlas* atlas, void* stbrp_context_opaque) { ImFontAtlasBuildPackCustomRects(atlas, stbrp_context_opaque); }
-	__declspec(dllexport) void ImFontAtlasBuildRender32bppRectFromStringExt(ImFontAtlas* atlas, int x, int y, int w, int h, const char* in_str, char in_marker_char, unsigned int in_marker_pixel_value) { ImFontAtlasBuildRender32bppRectFromString(atlas, x, y, w, h, in_str, in_marker_char, in_marker_pixel_value); }
-	__declspec(dllexport) void ImFontAtlasBuildRender8bppRectFromStringExt(ImFontAtlas* atlas, int x, int y, int w, int h, const char* in_str, char in_marker_char, byte in_marker_pixel_value) { ImFontAtlasBuildRender8bppRectFromString(atlas, x, y, w, h, in_str, in_marker_char, in_marker_pixel_value); }
-	__declspec(dllexport) void ImFontAtlasBuildSetupFontExt(ImFontAtlas* atlas, ImFont* font, ImFontConfig* font_config, float ascent, float descent) { ImFontAtlasBuildSetupFont(atlas, font, font_config, ascent, descent); }
-	__declspec(dllexport) const ImFontBuilderIO* ImFontAtlasGetBuilderForStbTruetypeExt() { return ImFontAtlasGetBuilderForStbTruetype(); }
-	__declspec(dllexport) bool ImFontAtlasGetMouseCursorTexDataExt(ImFontAtlas* atlas, int cursor_type, ImVec2* out_offset, ImVec2* out_size, ImVec2* out_uv_border, ImVec2* out_uv_fill) { return ImFontAtlasGetMouseCursorTexData(atlas, cursor_type, out_offset, out_size, out_uv_border, out_uv_fill); }
-	__declspec(dllexport) void ImFontAtlasUpdateSourcesPointersExt(ImFontAtlas* atlas) { ImFontAtlasUpdateSourcesPointers(atlas); }
-	__declspec(dllexport) void ImFormatStringToTempBufferVExt(const char** out_buf, const char** out_buf_end, const char* fmt, char* args) { ImFormatStringToTempBufferV(out_buf, out_buf_end, fmt, args); }
-	__declspec(dllexport) int ImFormatStringVExt(char* buf, unsigned int buf_size, const char* fmt, char* args) { return ImFormatStringV(buf, buf_size, fmt, args); }
-	__declspec(dllexport) bool ImGui_ImplDX9_CreateDeviceObjectsExt() { return ImGui_ImplDX9_CreateDeviceObjects(); }
-	__declspec(dllexport) bool ImGui_ImplDX9_InitExt(IDirect3DDevice9* device) { return ImGui_ImplDX9_Init(device); }
-	__declspec(dllexport) void ImGui_ImplDX9_InvalidateDeviceObjectsExt() { ImGui_ImplDX9_InvalidateDeviceObjects(); }
-	__declspec(dllexport) void ImGui_ImplDX9_NewFrameExt() { ImGui_ImplDX9_NewFrame(); }
-	__declspec(dllexport) void ImGui_ImplDX9_RenderDrawDataExt(ImDrawData* draw_data) { ImGui_ImplDX9_RenderDrawData(draw_data); }
-	__declspec(dllexport) void ImGui_ImplDX9_ShutdownExt() { ImGui_ImplDX9_Shutdown(); }
-	__declspec(dllexport) void ImGui_ImplWin32_EnableAlphaCompositingExt(void* hwnd) { ImGui_ImplWin32_EnableAlphaCompositing(hwnd); }
-	__declspec(dllexport) void ImGui_ImplWin32_EnableDpiAwarenessExt() { ImGui_ImplWin32_EnableDpiAwareness(); }
-	__declspec(dllexport) float ImGui_ImplWin32_GetDpiScaleForHwndExt(void* hwnd) { return ImGui_ImplWin32_GetDpiScaleForHwnd(hwnd); }
-	__declspec(dllexport) float ImGui_ImplWin32_GetDpiScaleForMonitorExt(void* monitor) { return ImGui_ImplWin32_GetDpiScaleForMonitor(monitor); }
-	__declspec(dllexport) bool ImGui_ImplWin32_InitExt(void* hwnd) { return ImGui_ImplWin32_Init(hwnd); }
-	__declspec(dllexport) bool ImGui_ImplWin32_InitForOpenGLExt(void* hwnd) { return ImGui_ImplWin32_InitForOpenGL(hwnd); }
-	__declspec(dllexport) void ImGui_ImplWin32_NewFrameExt() { ImGui_ImplWin32_NewFrame(); }
-	__declspec(dllexport) void ImGui_ImplWin32_ShutdownExt() { ImGui_ImplWin32_Shutdown(); }
-	__declspec(dllexport) long ImGui_ImplWin32_WndProcHandlerExt(HWND__* hwnd, unsigned int msg, unsigned int wParam, long lParam) { return ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam); }
-	__declspec(dllexport) long ImGui_ImplWin32_WndProcHandlerExExt(HWND__* hwnd, unsigned int msg, unsigned int wParam, long lParam, ImGuiIO& io) { return ImGui_ImplWin32_WndProcHandlerEx(hwnd, msg, wParam, lParam, io); }
-	__declspec(dllexport) unsigned int ImHashDataExt(const void* data_p, unsigned int data_size, unsigned int seed) { return ImHashData(data_p, data_size, seed); }
-	__declspec(dllexport) unsigned int ImHashStrExt(const char* data_p, unsigned int data_size, unsigned int seed) { return ImHashStr(data_p, data_size, seed); }
-	__declspec(dllexport) ImVec2 ImLineClosestPointExt(const ImVec2& a, const ImVec2& b, const ImVec2& p) { return ImLineClosestPoint(a, b, p); }
-	__declspec(dllexport) ImGuiStoragePair* ImLowerBoundExt(ImGuiStoragePair* in_begin, ImGuiStoragePair* in_end, unsigned int key) { return ImLowerBound(in_begin, in_end, key); }
-	__declspec(dllexport) const char* ImParseFormatFindEndExt(const char* fmt) { return ImParseFormatFindEnd(fmt); }
-	__declspec(dllexport) const char* ImParseFormatFindStartExt(const char* fmt) { return ImParseFormatFindStart(fmt); }
-	__declspec(dllexport) int ImParseFormatPrecisionExt(const char* fmt, int default_precision) { return ImParseFormatPrecision(fmt, default_precision); }
-	__declspec(dllexport) void ImParseFormatSanitizeForPrintingExt(const char* fmt_in, char* fmt_out, unsigned int fmt_out_size) { ImParseFormatSanitizeForPrinting(fmt_in, fmt_out, fmt_out_size); }
-	__declspec(dllexport) const char* ImParseFormatSanitizeForScanningExt(const char* fmt_in, char* fmt_out, unsigned int fmt_out_size) { return ImParseFormatSanitizeForScanning(fmt_in, fmt_out, fmt_out_size); }
-	__declspec(dllexport) const char* ImParseFormatTrimDecorationsExt(const char* fmt, char* buf, unsigned int buf_size) { return ImParseFormatTrimDecorations(fmt, buf, buf_size); }
-	__declspec(dllexport) const char* ImStrSkipBlankExt(const char* str) { return ImStrSkipBlank(str); }
-	__declspec(dllexport) void ImStrTrimBlanksExt(char* buf) { ImStrTrimBlanks(buf); }
-	__declspec(dllexport) const char* ImStrbolExt(const char* buf_mid_line, const char* buf_begin) { return ImStrbol(buf_mid_line, buf_begin); }
-	__declspec(dllexport) const char* ImStrchrRangeExt(const char* str, const char* str_end, char c) { return ImStrchrRange(str, str_end, c); }
-	__declspec(dllexport) char* ImStrdupExt(const char* str) { return ImStrdup(str); }
-	__declspec(dllexport) char* ImStrdupcpyExt(char* dst, unsigned int* p_dst_size, const char* src) { return ImStrdupcpy(dst, p_dst_size, src); }
-	__declspec(dllexport) const char* ImStreolRangeExt(const char* str, const char* str_end) { return ImStreolRange(str, str_end); }
-	__declspec(dllexport) int ImStricmpExt(const char* str1, const char* str2) { return ImStricmp(str1, str2); }
-	__declspec(dllexport) const char* ImStristrExt(const char* haystack, const char* haystack_end, const char* needle, const char* needle_end) { return ImStristr(haystack, haystack_end, needle, needle_end); }
-	__declspec(dllexport) int ImStrlenWExt(const unsigned short* str) { return ImStrlenW(str); }
-	__declspec(dllexport) void ImStrncpyExt(char* dst, const char* src, unsigned int count) { ImStrncpy(dst, src, count); }
-	__declspec(dllexport) int ImStrnicmpExt(const char* str1, const char* str2, unsigned int count) { return ImStrnicmp(str1, str2, count); }
-	__declspec(dllexport) int ImTextCharFromUtf8Ext(unsigned int* out_char, const char* in_text, const char* in_text_end) { return ImTextCharFromUtf8(out_char, in_text, in_text_end); }
-	__declspec(dllexport) const char* ImTextCharToUtf8Ext(char* out_buf, unsigned int c) { return ImTextCharToUtf8(out_buf, c); }
-	__declspec(dllexport) int ImTextCountCharsFromUtf8Ext(const char* in_text, const char* in_text_end) { return ImTextCountCharsFromUtf8(in_text, in_text_end); }
-	__declspec(dllexport) int ImTextCountLinesExt(const char* in_text, const char* in_text_end) { return ImTextCountLines(in_text, in_text_end); }
-	__declspec(dllexport) int ImTextCountUtf8BytesFromCharExt(const char* in_text, const char* in_text_end) { return ImTextCountUtf8BytesFromChar(in_text, in_text_end); }
-	__declspec(dllexport) int ImTextCountUtf8BytesFromStrExt(const unsigned short* in_text, const unsigned short* in_text_end) { return ImTextCountUtf8BytesFromStr(in_text, in_text_end); }
-	__declspec(dllexport) const char* ImTextFindPreviousUtf8CodepointExt(const char* in_text_start, const char* in_text_curr) { return ImTextFindPreviousUtf8Codepoint(in_text_start, in_text_curr); }
-	__declspec(dllexport) int ImTextStrFromUtf8Ext(unsigned short* buf, int buf_size, const char* in_text, const char* in_text_end, const char** in_text_remaining) { return ImTextStrFromUtf8(buf, buf_size, in_text, in_text_end, in_text_remaining); }
-	__declspec(dllexport) int ImTextStrToUtf8Ext(char* out_buf, int out_buf_size, const unsigned short* in_text, const unsigned short* in_text_end) { return ImTextStrToUtf8(out_buf, out_buf_size, in_text, in_text_end); }
-	__declspec(dllexport) void ImTriangleBarycentricCoordsExt(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& p, float& out_u, float& out_v, float& out_w) { ImTriangleBarycentricCoords(a, b, c, p, out_u, out_v, out_w); }
-	__declspec(dllexport) ImVec2 ImTriangleClosestPointExt(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& p) { return ImTriangleClosestPoint(a, b, c, p); }
-	__declspec(dllexport) bool ImTriangleContainsPointExt(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& p) { return ImTriangleContainsPoint(a, b, c, p); }
+	__declspec(dllexport) unsigned int ImAlphaBlendColorsX(unsigned int col_a, unsigned int col_b) { return ImAlphaBlendColors(col_a, col_b); }
+	__declspec(dllexport) ImVec2 ImBezierCubicCalcX(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, float t) { return ImBezierCubicCalc(p1, p2, p3, p4, t); }
+	__declspec(dllexport) ImVec2 ImBezierCubicClosestPointX(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, const ImVec2& p, int num_segments) { return ImBezierCubicClosestPoint(p1, p2, p3, p4, p, num_segments); }
+	__declspec(dllexport) ImVec2 ImBezierCubicClosestPointCasteljauX(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, const ImVec2& p, float tess_tol) { return ImBezierCubicClosestPointCasteljau(p1, p2, p3, p4, p, tess_tol); }
+	__declspec(dllexport) ImVec2 ImBezierQuadraticCalcX(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, float t) { return ImBezierQuadraticCalc(p1, p2, p3, t); }
+	__declspec(dllexport) bool ImFileCloseX(_iobuf* f) { return ImFileClose(f); }
+	__declspec(dllexport) unsigned long long ImFileGetSizeX(_iobuf* f) { return ImFileGetSize(f); }
+	__declspec(dllexport) void* ImFileLoadToMemoryX(const char* filename, const char* mode, unsigned int* out_file_size, int padding_bytes) { return ImFileLoadToMemory(filename, mode, out_file_size, padding_bytes); }
+	__declspec(dllexport) _iobuf* ImFileOpenX(const char* filename, const char* mode) { return ImFileOpen(filename, mode); }
+	__declspec(dllexport) unsigned long long ImFileReadX(void* data, unsigned long long sz, unsigned long long count, _iobuf* f) { return ImFileRead(data, sz, count, f); }
+	__declspec(dllexport) unsigned long long ImFileWriteX(const void* data, unsigned long long sz, unsigned long long count, _iobuf* f) { return ImFileWrite(data, sz, count, f); }
+	__declspec(dllexport) void ImFontAtlasBuildFinishX(ImFontAtlas* atlas) { ImFontAtlasBuildFinish(atlas); }
+	__declspec(dllexport) void ImFontAtlasBuildGetOversampleFactorsX(const ImFontConfig* src, int* out_oversample_h, int* out_oversample_v) { ImFontAtlasBuildGetOversampleFactors(src, out_oversample_h, out_oversample_v); }
+	__declspec(dllexport) void ImFontAtlasBuildInitX(ImFontAtlas* atlas) { ImFontAtlasBuildInit(atlas); }
+	__declspec(dllexport) void ImFontAtlasBuildMultiplyCalcLookupTableX(byte* out_table, float in_brighten_factor) { ImFontAtlasBuildMultiplyCalcLookupTable(out_table, in_brighten_factor); }
+	__declspec(dllexport) void ImFontAtlasBuildMultiplyRectAlpha8X(const byte* table, byte* pixels, int x, int y, int w, int h, int stride) { ImFontAtlasBuildMultiplyRectAlpha8(table, pixels, x, y, w, h, stride); }
+	__declspec(dllexport) void ImFontAtlasBuildPackCustomRectsX(ImFontAtlas* atlas, void* stbrp_context_opaque) { ImFontAtlasBuildPackCustomRects(atlas, stbrp_context_opaque); }
+	__declspec(dllexport) void ImFontAtlasBuildRender32bppRectFromStringX(ImFontAtlas* atlas, int x, int y, int w, int h, const char* in_str, char in_marker_char, unsigned int in_marker_pixel_value) { ImFontAtlasBuildRender32bppRectFromString(atlas, x, y, w, h, in_str, in_marker_char, in_marker_pixel_value); }
+	__declspec(dllexport) void ImFontAtlasBuildRender8bppRectFromStringX(ImFontAtlas* atlas, int x, int y, int w, int h, const char* in_str, char in_marker_char, byte in_marker_pixel_value) { ImFontAtlasBuildRender8bppRectFromString(atlas, x, y, w, h, in_str, in_marker_char, in_marker_pixel_value); }
+	__declspec(dllexport) void ImFontAtlasBuildSetupFontX(ImFontAtlas* atlas, ImFont* font, ImFontConfig* font_config, float ascent, float descent) { ImFontAtlasBuildSetupFont(atlas, font, font_config, ascent, descent); }
+	__declspec(dllexport) const ImFontBuilderIO* ImFontAtlasGetBuilderForStbTruetypeX() { return ImFontAtlasGetBuilderForStbTruetype(); }
+	__declspec(dllexport) bool ImFontAtlasGetMouseCursorTexDataX(ImFontAtlas* atlas, int cursor_type, ImVec2* out_offset, ImVec2* out_size, ImVec2* out_uv_border, ImVec2* out_uv_fill) { return ImFontAtlasGetMouseCursorTexData(atlas, cursor_type, out_offset, out_size, out_uv_border, out_uv_fill); }
+	__declspec(dllexport) void ImFontAtlasUpdateSourcesPointersX(ImFontAtlas* atlas) { ImFontAtlasUpdateSourcesPointers(atlas); }
+	__declspec(dllexport) void ImFormatStringToTempBufferVX(const char** out_buf, const char** out_buf_end, const char* fmt, char* args) { ImFormatStringToTempBufferV(out_buf, out_buf_end, fmt, args); }
+	__declspec(dllexport) int ImFormatStringVX(char* buf, unsigned int buf_size, const char* fmt, char* args) { return ImFormatStringV(buf, buf_size, fmt, args); }
+	__declspec(dllexport) bool ImGui_ImplDX9_CreateDeviceObjectsX() { return ImGui_ImplDX9_CreateDeviceObjects(); }
+	__declspec(dllexport) bool ImGui_ImplDX9_InitX(IDirect3DDevice9* device) { return ImGui_ImplDX9_Init(device); }
+	__declspec(dllexport) void ImGui_ImplDX9_InvalidateDeviceObjectsX() { ImGui_ImplDX9_InvalidateDeviceObjects(); }
+	__declspec(dllexport) void ImGui_ImplDX9_NewFrameX() { ImGui_ImplDX9_NewFrame(); }
+	__declspec(dllexport) void ImGui_ImplDX9_RenderDrawDataX(ImDrawData* draw_data) { ImGui_ImplDX9_RenderDrawData(draw_data); }
+	__declspec(dllexport) void ImGui_ImplDX9_ShutdownX() { ImGui_ImplDX9_Shutdown(); }
+	__declspec(dllexport) void ImGui_ImplWin32_EnableAlphaCompositingX(void* hwnd) { ImGui_ImplWin32_EnableAlphaCompositing(hwnd); }
+	__declspec(dllexport) void ImGui_ImplWin32_EnableDpiAwarenessX() { ImGui_ImplWin32_EnableDpiAwareness(); }
+	__declspec(dllexport) float ImGui_ImplWin32_GetDpiScaleForHwndX(void* hwnd) { return ImGui_ImplWin32_GetDpiScaleForHwnd(hwnd); }
+	__declspec(dllexport) float ImGui_ImplWin32_GetDpiScaleForMonitorX(void* monitor) { return ImGui_ImplWin32_GetDpiScaleForMonitor(monitor); }
+	__declspec(dllexport) bool ImGui_ImplWin32_InitX(void* hwnd) { return ImGui_ImplWin32_Init(hwnd); }
+	__declspec(dllexport) bool ImGui_ImplWin32_InitForOpenGLX(void* hwnd) { return ImGui_ImplWin32_InitForOpenGL(hwnd); }
+	__declspec(dllexport) void ImGui_ImplWin32_NewFrameX() { ImGui_ImplWin32_NewFrame(); }
+	__declspec(dllexport) void ImGui_ImplWin32_ShutdownX() { ImGui_ImplWin32_Shutdown(); }
+	__declspec(dllexport) long ImGui_ImplWin32_WndProcHandlerX(HWND__* hwnd, unsigned int msg, unsigned int wParam, long lParam) { return ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam); }
+	__declspec(dllexport) long ImGui_ImplWin32_WndProcHandlerExX(HWND__* hwnd, unsigned int msg, unsigned int wParam, long lParam, ImGuiIO& io) { return ImGui_ImplWin32_WndProcHandlerEx(hwnd, msg, wParam, lParam, io); }
+	__declspec(dllexport) unsigned int ImHashDataX(const void* data_p, unsigned int data_size, unsigned int seed) { return ImHashData(data_p, data_size, seed); }
+	__declspec(dllexport) unsigned int ImHashStrX(const char* data_p, unsigned int data_size, unsigned int seed) { return ImHashStr(data_p, data_size, seed); }
+	__declspec(dllexport) ImVec2 ImLineClosestPointX(const ImVec2& a, const ImVec2& b, const ImVec2& p) { return ImLineClosestPoint(a, b, p); }
+	__declspec(dllexport) ImGuiStoragePair* ImLowerBoundX(ImGuiStoragePair* in_begin, ImGuiStoragePair* in_end, unsigned int key) { return ImLowerBound(in_begin, in_end, key); }
+	__declspec(dllexport) const char* ImParseFormatFindEndX(const char* fmt) { return ImParseFormatFindEnd(fmt); }
+	__declspec(dllexport) const char* ImParseFormatFindStartX(const char* fmt) { return ImParseFormatFindStart(fmt); }
+	__declspec(dllexport) int ImParseFormatPrecisionX(const char* fmt, int default_precision) { return ImParseFormatPrecision(fmt, default_precision); }
+	__declspec(dllexport) void ImParseFormatSanitizeForPrintingX(const char* fmt_in, char* fmt_out, unsigned int fmt_out_size) { ImParseFormatSanitizeForPrinting(fmt_in, fmt_out, fmt_out_size); }
+	__declspec(dllexport) const char* ImParseFormatSanitizeForScanningX(const char* fmt_in, char* fmt_out, unsigned int fmt_out_size) { return ImParseFormatSanitizeForScanning(fmt_in, fmt_out, fmt_out_size); }
+	__declspec(dllexport) const char* ImParseFormatTrimDecorationsX(const char* fmt, char* buf, unsigned int buf_size) { return ImParseFormatTrimDecorations(fmt, buf, buf_size); }
+	__declspec(dllexport) const char* ImStrSkipBlankX(const char* str) { return ImStrSkipBlank(str); }
+	__declspec(dllexport) void ImStrTrimBlanksX(char* buf) { ImStrTrimBlanks(buf); }
+	__declspec(dllexport) const char* ImStrbolX(const char* buf_mid_line, const char* buf_begin) { return ImStrbol(buf_mid_line, buf_begin); }
+	__declspec(dllexport) const char* ImStrchrRangeX(const char* str, const char* str_end, char c) { return ImStrchrRange(str, str_end, c); }
+	__declspec(dllexport) char* ImStrdupX(const char* str) { return ImStrdup(str); }
+	__declspec(dllexport) char* ImStrdupcpyX(char* dst, unsigned int* p_dst_size, const char* src) { return ImStrdupcpy(dst, p_dst_size, src); }
+	__declspec(dllexport) const char* ImStreolRangeX(const char* str, const char* str_end) { return ImStreolRange(str, str_end); }
+	__declspec(dllexport) int ImStricmpX(const char* str1, const char* str2) { return ImStricmp(str1, str2); }
+	__declspec(dllexport) const char* ImStristrX(const char* haystack, const char* haystack_end, const char* needle, const char* needle_end) { return ImStristr(haystack, haystack_end, needle, needle_end); }
+	__declspec(dllexport) int ImStrlenWX(const unsigned short* str) { return ImStrlenW(str); }
+	__declspec(dllexport) void ImStrncpyX(char* dst, const char* src, unsigned int count) { ImStrncpy(dst, src, count); }
+	__declspec(dllexport) int ImStrnicmpX(const char* str1, const char* str2, unsigned int count) { return ImStrnicmp(str1, str2, count); }
+	__declspec(dllexport) int ImTextCharFromUtf8X(unsigned int* out_char, const char* in_text, const char* in_text_end) { return ImTextCharFromUtf8(out_char, in_text, in_text_end); }
+	__declspec(dllexport) const char* ImTextCharToUtf8X(char* out_buf, unsigned int c) { return ImTextCharToUtf8(out_buf, c); }
+	__declspec(dllexport) int ImTextCountCharsFromUtf8X(const char* in_text, const char* in_text_end) { return ImTextCountCharsFromUtf8(in_text, in_text_end); }
+	__declspec(dllexport) int ImTextCountLinesX(const char* in_text, const char* in_text_end) { return ImTextCountLines(in_text, in_text_end); }
+	__declspec(dllexport) int ImTextCountUtf8BytesFromCharX(const char* in_text, const char* in_text_end) { return ImTextCountUtf8BytesFromChar(in_text, in_text_end); }
+	__declspec(dllexport) int ImTextCountUtf8BytesFromStrX(const unsigned short* in_text, const unsigned short* in_text_end) { return ImTextCountUtf8BytesFromStr(in_text, in_text_end); }
+	__declspec(dllexport) const char* ImTextFindPreviousUtf8CodepointX(const char* in_text_start, const char* in_text_curr) { return ImTextFindPreviousUtf8Codepoint(in_text_start, in_text_curr); }
+	__declspec(dllexport) int ImTextStrFromUtf8X(unsigned short* buf, int buf_size, const char* in_text, const char* in_text_end, const char** in_text_remaining) { return ImTextStrFromUtf8(buf, buf_size, in_text, in_text_end, in_text_remaining); }
+	__declspec(dllexport) int ImTextStrToUtf8X(char* out_buf, int out_buf_size, const unsigned short* in_text, const unsigned short* in_text_end) { return ImTextStrToUtf8(out_buf, out_buf_size, in_text, in_text_end); }
+	__declspec(dllexport) void ImTriangleBarycentricCoordsX(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& p, float& out_u, float& out_v, float& out_w) { ImTriangleBarycentricCoords(a, b, c, p, out_u, out_v, out_w); }
+	__declspec(dllexport) ImVec2 ImTriangleClosestPointX(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& p) { return ImTriangleClosestPoint(a, b, c, p); }
+	__declspec(dllexport) bool ImTriangleContainsPointX(const ImVec2& a, const ImVec2& b, const ImVec2& c, const ImVec2& p) { return ImTriangleContainsPoint(a, b, c, p); }
 	__declspec(dllexport) void ImGui_Image(unsigned long long user_texture_id, const ImVec2& image_size, const ImVec2& uv0, const ImVec2& uv1) { ImGui::Image(user_texture_id, image_size, uv0, uv1); }
 	__declspec(dllexport) bool ImGui_ImageButton(const char* str_id, unsigned long long user_texture_id, const ImVec2& image_size, const ImVec2& uv0, const ImVec2& uv1, const ImVec4& bg_col, const ImVec4& tint_col) { return ImGui::ImageButton(str_id, user_texture_id, image_size, uv0, uv1, bg_col, tint_col); }
 	__declspec(dllexport) bool ImGui_ImageButtonEx(unsigned int id, unsigned long long user_texture_id, const ImVec2& image_size, const ImVec2& uv0, const ImVec2& uv1, const ImVec4& bg_col, const ImVec4& tint_col, int flags) { return ImGui::ImageButtonEx(id, user_texture_id, image_size, uv0, uv1, bg_col, tint_col, flags); }
@@ -1058,6 +1058,6 @@ extern "C" {
 	__declspec(dllexport) void ImDrawList__TryMergeDrawCmds(ImDrawList* _this) { _this->_TryMergeDrawCmds(); }
 	__declspec(dllexport) void ImGuiTextBuffer_append(ImGuiTextBuffer* _this, const char* str, const char* str_end) { _this->append(str, str_end); }
 	__declspec(dllexport) void ImGuiTextBuffer_appendfv(ImGuiTextBuffer* _this, const char* fmt, char* args) { _this->appendfv(fmt, args); }
-	__declspec(dllexport) void ImGuiTextFilter_ImGuiTextRange_split(const ImGuiTextFilter::ImGuiTextRange* _this, char separator, ImVector<ImGuiTextFilter::ImGuiTextRange>* out) { _this->split(separator, out); }
+	__declspec(dllexport) void ImGuiTextFilter_ImGuiTextRange_split(const ImGuiTextFilter::ImGuiTextRange* _this, char separator, ImVector<ImGuiTextFilter::ImGuiTextRange>* _out) { _this->split(separator, _out); }
 
 }

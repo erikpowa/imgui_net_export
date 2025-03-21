@@ -218,8 +218,17 @@ public unsafe class StructDescriptor : CSharpDescriptor
 
         if (IsTypeForwarded(typeName))
             return true;
+
+        if (generic)
+        {
+            _structs.AppendLine($"[StructLayout(LayoutKind.Sequential, Pack = 1, Size = 0x{length:X4})]"); // [StructLayout(LayoutKind.Sequential, Size = 0x0000)]
+        }
+        else
+        {
+            _structs.AppendLine($"[StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x{length:X4})]"); // [StructLayout(LayoutKind.Explicit, Size = 0x0000)]    
+        }
         
-        _structs.AppendLine($"[StructLayout(LayoutKind.Explicit, Pack = 1, Size = 0x{length:X4})]"); // [StructLayout(LayoutKind.Explicit, Size = 0x0000)]
+        
         _structs.AppendLine($"public unsafe partial struct {typeName}{(generic ? "<T> where T : unmanaged" : "")} {{");
         
         EnumChildren(@struct, SymTag.SymTagData, (int)NameSearchOptions.nsfCaseInsensitive, field =>
@@ -242,7 +251,17 @@ public unsafe class StructDescriptor : CSharpDescriptor
             }
 
             // [FieldOffset(0x0004)] public readonly int Hello;
-            _structs.AppendLine($"\t[FieldOffset(0x{offset:X4})] {access} {fieldTypeName} {fieldName};");
+
+            if (generic)
+            {
+                _structs.AppendLine($"\t{access} {fieldTypeName} {fieldName};");
+            }
+            else
+            {
+                _structs.AppendLine($"\t[FieldOffset(0x{offset:X4})] {access} {fieldTypeName} {fieldName};");    
+            }
+            
+            
 
             fieldType->Release(fieldType);
             
