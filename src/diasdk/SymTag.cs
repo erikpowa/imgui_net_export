@@ -1,6 +1,6 @@
 namespace imgui_net_export;
 
-public enum SymTagEnum
+public enum SymTag
 {
     SymTagNull,
     SymTagExe,

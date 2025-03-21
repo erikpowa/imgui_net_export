@@ -7,7 +7,7 @@ public unsafe struct IDiaSession
 {
     public VirtualFunctionTable* lpVtbl;
 
-    public HRESULT findSymbolByRVA(IDiaSession* _this, uint rva, SymTagEnum symTagEnum, IDiaSymbol **ppSymbol) => _this->lpVtbl->findSymbolByRVA(_this, rva, symTagEnum, ppSymbol);
+    public HRESULT findSymbolByRVA(IDiaSession* _this, int rva, SymTag symTag, IDiaSymbol **ppSymbol) => _this->lpVtbl->findSymbolByRVA(_this, rva, symTag, ppSymbol);
     public HRESULT symbolById(IDiaSession* _this, int id, IDiaSymbol** pRetVal) => _this->lpVtbl->symbolById(_this, id, pRetVal);
 
     public HRESULT get_globalScope(IDiaSession* _this, IDiaSymbol** pRetVal)
@@ -38,7 +38,7 @@ public unsafe struct IDiaSession
         public delegate* unmanaged[Stdcall]<IDiaSession*, void> findChildrenExByVA;
         public delegate* unmanaged[Stdcall]<IDiaSession*, void> findChildrenExByRVA; // 10
         public delegate* unmanaged[Stdcall]<IDiaSession*, void> findSymbolByAddr;
-        public delegate* unmanaged[Stdcall]<IDiaSession*, uint, SymTagEnum, IDiaSymbol**, HRESULT> findSymbolByRVA;
+        public delegate* unmanaged[Stdcall]<IDiaSession*, int, SymTag, IDiaSymbol**, HRESULT> findSymbolByRVA;
         public delegate* unmanaged[Stdcall]<IDiaSession*, void> findSymbolByVA;
         public delegate* unmanaged[Stdcall]<IDiaSession*, void> findSymbolByToken;
         public delegate* unmanaged[Stdcall]<IDiaSession*, void> symsAreEquiv;

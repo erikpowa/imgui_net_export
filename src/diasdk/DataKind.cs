@@ -13,12 +13,3 @@ public enum DataKind
     DataIsStaticMember,
     DataIsConstant
 }
-
-public enum UdtKind
-{
-    UdtStruct,
-    UdtClass,
-    UdtUnion,
-    UdtInterface,
-    UdtTaggedUnion
-}

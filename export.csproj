@@ -9,4 +9,13 @@
         <RootNamespace>export</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
+    <ItemGroup>
+      <Compile Remove="build\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Remove="build\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="build\**" />
+    </ItemGroup>
 </Project>

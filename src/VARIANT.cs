@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+/*using System.Runtime.InteropServices;
 
 namespace imgui_net_export;
 
@@ -18,4 +18,4 @@ public struct VARIANT
     [FieldOffset(0x0008)] public ushort mUInt16;
     [FieldOffset(0x0008)] public byte mUInt8;
     [FieldOffset(0x0008)] public sbyte mInt8;
-}
+}*/

@@ -7,19 +7,22 @@ public readonly unsafe partial struct BSTR : IDisposable
 {
     public readonly char* mPointer;
 
-    public string GetString()
+    /*public string GetString()
     {
         if (mPointer == null)
         {
-            return string.Empty;
-            throw new NotImplementedException();
-            return string.Empty;
+            return "Unknown";
         }
         return new string(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(mPointer));
-    }
+    }*/
 
-    public static implicit operator string(BSTR bstr) => bstr.GetString();
-    public override string ToString() => GetString();
+    //public bool IsEmpty => mPointer == null || *mPointer != '\0';
+    //public static implicit operator string(BSTR bstr) => bstr.GetString();
+    
+    public override string ToString()
+    {
+        return mPointer == null ? string.Empty : new string(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(mPointer));
+    }
 
     public void Dispose()
     {
